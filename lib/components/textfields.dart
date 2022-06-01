@@ -6,9 +6,11 @@ textField(
         required bool isPassword,
         required TextInputType field,
         TextEditingController? controller,
+        String ?  Function (String?) ? validator,
         VoidCallback? onTap,
         Widget? suffixIcon}) =>
-    TextField(
+    TextFormField(
+    validator: validator,
       controller: controller,
       obscureText: isPassword,
       keyboardType: field,
@@ -27,4 +29,5 @@ textField(
           ),
         ),
       ),
+    
     );

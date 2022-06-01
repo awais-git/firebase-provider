@@ -3,6 +3,7 @@ import 'package:firebase/utils/const.dart';
 import 'package:firebase/utils/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase/routing/routes.dart' as routes;
 
@@ -14,6 +15,7 @@ class Home extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: kPrimary,
         title: const Text('Homepage'),
         centerTitle: true,
@@ -39,7 +41,10 @@ class Home extends StatelessWidget {
         children: [
           Center(
             child: Text('The person login has email : ' + user.email!),
-          )
+          ),
+           SizedBox(height: height_4,),
+          Lottie.network('https://assets4.lottiefiles.com/packages/lf20_oq9awosz.json'),
+         
         ],
       ),
     );

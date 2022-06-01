@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../controller/auth_controller/login_controller.dart';
 
 class ResetPassword extends StatelessWidget {
-  const ResetPassword({Key? key}) : super(key: key);
+  ResetPassword({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +35,17 @@ class ResetPassword extends StatelessWidget {
             height: height_2,
           ),
           Consumer<LoginController>(builder: (context, controller, _) {
-            return buttons(
-                text: 'Reset',
-                height: 60,
-                width: 150,
-                onTap: () {
-                  controller.resetPassword;
-                });
+            return controller.isRestPassword
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : buttons(
+                    text: 'Reset',
+                    height: 60,
+                    width: 150,
+                    onTap: () {
+                      controller.resetPassword(context);
+                    });
           })
         ],
       ),

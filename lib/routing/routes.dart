@@ -24,7 +24,7 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
       );
     case register:
       return MaterialPageRoute(
-        builder: (context) => const Register(),
+        builder: (context) =>  Register(),
       );
     case homepage:
       return MaterialPageRoute(
@@ -33,7 +33,7 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
 
     case resetPassword:
       return MaterialPageRoute(
-        builder: (context) => const ResetPassword(),
+        builder: (context) =>  ResetPassword(),
       );
     default:
       throw ('This route does not exist');

@@ -16,10 +16,11 @@ class GoogleSigninController extends ChangeNotifier {
         accessToken: _googleSignInAuthentication!.accessToken,
         idToken: _googleSignInAuthentication.idToken,
       );
+
       await _firebaseAuth.signInWithCredential(authCredential);
     } catch (e) {
-       // ignore: avoid_print
-       print ('error occured $e');
+      // ignore: avoid_print
+      print('error occured $e');
     }
   }
 }

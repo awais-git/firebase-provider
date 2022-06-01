@@ -8,12 +8,13 @@ class LoginController extends ChangeNotifier {
   TextEditingController password = TextEditingController();
   TextEditingController emailResetpass = TextEditingController();
   bool isPasswordVisible = false;
+  bool isRestPassword = false;
 
   //Login
   Future login(BuildContext context) async {
     try {
       isLoading = true;
-       notifyListeners();
+      notifyListeners();
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email.text.trim(),
         password: password.text.trim(),
@@ -25,10 +26,10 @@ class LoginController extends ChangeNotifier {
               child: CircularProgressIndicator(),
             );
           });
-      Navigator.pushNamed(context, routes.homepage);
+      Navigator.pushReplacementNamed(context, routes.homepage);
     } on FirebaseAuthException catch (e) {
       isLoading = false;
-       notifyListeners();
+      notifyListeners();
       late String message;
       switch (e.code) {
         case 'invalid-email':
@@ -57,19 +58,54 @@ class LoginController extends ChangeNotifier {
           });
     } finally {
       isLoading = false;
-       notifyListeners();
+      notifyListeners();
     }
-   
   }
 
   //Reset password
-  Future resetPassword() async {
+  Future resetPassword(BuildContext context) async {
     try {
+      isRestPassword = true;
+      notifyListeners();
       await FirebaseAuth.instance.sendPasswordResetEmail(
         email: emailResetpass.text.trim(),
       );
-    } catch (e) {
+      isRestPassword = false;
+      notifyListeners();
+      showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            title: const Text('Reset password email sent'),
+          );
+        },
+      );
+      print(emailResetpass.text);
+    } on FirebaseException catch (e) {
       print(e);
+
+      String? message;
+      switch (e.code) {
+        case 'auth/invalid-emai':
+          message = 'Invalid Email';
+          break;
+
+        case 'uth/user-not-found':
+          message = "email not exist";
+          break;
+      }
+      showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            title: const Text('Password reset failed'),
+            content: Text(message ?? ''),
+          );
+        },
+      );
+    } finally {
+      isRestPassword = false;
+      notifyListeners();
     }
   }
 
